@@ -5,10 +5,6 @@ namespace AtWork.Domain.Entities
 {
     public class TB_Funcionario : BaseEntity
     {
-        [Key]
-        [Column("id")]
-        public Guid ID { get; set; }
-
         [Required]
         [StringLength(255)]
         [Column("nome")]

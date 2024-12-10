@@ -6,10 +6,6 @@ namespace AtWork.Domain.Entities
     [Table("tb_ponto")]
     internal class TB_Ponto : BaseEntity
     {
-        [Key]
-        [Column("id")]
-        public Guid ID { get; set; }
-
         [Required]
         [Column("id_funcionario")]
         public Guid ID_Funcionario { get; set; }
