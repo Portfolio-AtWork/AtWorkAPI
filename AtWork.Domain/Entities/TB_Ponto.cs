@@ -1,0 +1,29 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AtWork.Domain.Entities
+{
+    [Table("tb_ponto")]
+    internal class TB_Ponto : BaseEntity
+    {
+        [Key]
+        [Column("id")]
+        public Guid ID { get; set; }
+
+        [Required]
+        [Column("id_funcionario")]
+        public Guid ID_Funcionario { get; set; }
+
+        [ForeignKey("ID_Funcionario")]
+        public TB_Funcionario FuncionarioFK { get; set; } = null!;
+
+        [Required]
+        [Column("dt_ponto")]
+        public DateTime DT_Ponto { get; set; }
+
+        [Required]
+        [StringLength(1)]
+        [Column("st_ponto")]
+        public string ST_Ponto { get; set; } = null!;
+    }
+}
