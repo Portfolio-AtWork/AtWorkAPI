@@ -5,6 +5,11 @@ namespace AtWork.Domain.Database.Entities
 {
     public class BaseEntity
     {
+        [Key]
+        [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid ID { get; set; }
+
         [Required]
         [Column("dt_cad")]
         public DateTime DT_Cad { get; set; }
