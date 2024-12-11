@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AtWork.Domain.Entities
+namespace AtWork.Domain.Database.Entities
 {
     [Table("tb_grupo")]
     public class TB_Grupo : BaseEntity

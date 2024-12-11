@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AtWork.Domain.Entities
+namespace AtWork.Domain.Database.Entities
 {
     [Table("tb_ponto")]
-    internal class TB_Ponto : BaseEntity
+    public class TB_Ponto : BaseEntity
     {
         [Key]
         [Column("id")]

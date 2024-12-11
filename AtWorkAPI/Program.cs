@@ -1,3 +1,6 @@
+using AtWork.Domain.Database;
+using AtWork.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 namespace AtWorkAPI
@@ -7,6 +10,16 @@ namespace AtWorkAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString));
+
+            builder.Services.AddMediatR((cfg) =>
+            {
+                cfg.AutoRegisterRequestProcessors = true;
+            });
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Adicionar serviços ao contêiner
             builder.Services.AddControllers();

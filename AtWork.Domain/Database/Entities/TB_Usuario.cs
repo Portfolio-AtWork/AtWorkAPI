@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AtWork.Domain.Entities
+namespace AtWork.Domain.Database.Entities
 {
-    public class TB_Funcionario : BaseEntity
+    [Table("tb_usuario")]
+    public class TB_Usuario : BaseEntity
     {
         [Key]
         [Column("id")]
@@ -16,6 +17,11 @@ namespace AtWork.Domain.Entities
 
         [Required]
         [StringLength(255)]
+        [Column("login")]
+        public string Login { get; set; } = null!;
+
+        [Required]
+        [StringLength(255)]
         [Column("senha")]
         public string Senha { get; set; } = null!;
 
@@ -23,19 +29,6 @@ namespace AtWork.Domain.Entities
         [StringLength(1)]
         [Column("st_status")]
         public string ST_Status { get; set; } = null!;
-
-        [Required]
-        [Column("id_usuario")]
-        public Guid ID_Usuario { get; set; }
-
-        [ForeignKey("ID_Usuario")]
-        public TB_Usuario UsuarioFK { get; set; } = null!;
-
-        [Column("id_grupo")]
-        public Guid? ID_Grupo { get; set; }
-
-        [ForeignKey("ID_Grupo")]
-        public TB_Grupo? GrupoFK { get; set; }
 
         [Required]
         [StringLength(255)]
