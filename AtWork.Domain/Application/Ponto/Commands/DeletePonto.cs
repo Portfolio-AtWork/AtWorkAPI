@@ -3,6 +3,7 @@ using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Shared.Enums.Models;
 using AtWork.Shared.Extensions;
 using AtWork.Shared.Models;
+using AtWork.Shared.Structs;
 using MediatR;
 
 namespace AtWork.Domain.Application.Ponto.Commands
@@ -24,7 +25,16 @@ namespace AtWork.Domain.Application.Ponto.Commands
                 return result;
             }
 
-            await unitOfWork.Repository.DeleteAsync(ponto, cancellationToken);
+            bool pontoAindaPendente = ponto.ST_Ponto == StatusPonto.PendenteAprovacao;
+            if (pontoAindaPendente)
+            {
+                await unitOfWork.Repository.DeleteAsync(ponto, cancellationToken);
+            }
+            else
+            {
+                ponto.ST_Ponto = StatusPonto.Cancelado;
+                await unitOfWork.Repository.UpdateAsync(ponto, cancellationToken);
+            }
 
             result.Value = unitOfWork.SaveChangesAsync().Ok();
             return result;
