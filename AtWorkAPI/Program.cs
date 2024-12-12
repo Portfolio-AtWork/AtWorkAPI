@@ -1,5 +1,6 @@
 using AtWork.Domain.Database;
-using AtWork.Domain.Interfaces;
+using AtWork.Domain.Interfaces.UnitOfWork;
+using AtWork.Infra.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -19,6 +20,7 @@ namespace AtWorkAPI
                 cfg.AutoRegisterRequestProcessors = true;
             });
 
+            builder.Services.AddSingleton<IBaseRepository, BaseRepository>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Adicionar serviços ao contêiner

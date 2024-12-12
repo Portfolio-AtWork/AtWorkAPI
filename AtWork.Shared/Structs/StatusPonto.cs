@@ -4,6 +4,6 @@
     {
         public const string Aprovado = "A";
         public const string PendenteAprovacao = "P";
-        public const string Reprovado = "C";
+        public const string Reprovado = "R";
     }
 }

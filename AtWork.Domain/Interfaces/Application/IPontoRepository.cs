@@ -2,7 +2,7 @@
 
 namespace AtWork.Domain.Interfaces.Application
 {
-    public interface IPontoRepository : IRepository<TB_Ponto>
+    public interface IPontoRepository : IBaseRepository<TB_Ponto>
     {
         Task<List<TB_Ponto>> GetByFuncionario(Guid ID_Funcionario, CancellationToken ct);
     }

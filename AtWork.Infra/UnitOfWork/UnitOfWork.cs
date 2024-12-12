@@ -1,13 +1,17 @@
-﻿using AtWork.Domain.Interfaces;
+﻿using AtWork.Domain.Database;
+using AtWork.Domain.Interfaces.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 
-namespace AtWork.Domain.Database
+namespace AtWork.Infra.UnitOfWork
 {
-    public class UnitOfWork(DatabaseContext context, IServiceProvider serviceProvider) : IUnitOfWork
+    public class UnitOfWork(
+        DatabaseContext context,
+        IBaseRepository baseRepository
+    ) : IUnitOfWork
     {
+        public IBaseRepository Repository { get; } = baseRepository;
         private IDbTransaction? transaction;
 
         public IDbTransaction BeginTransaction()
@@ -39,16 +43,6 @@ namespace AtWork.Domain.Database
         public void Rollback()
         {
             transaction?.Rollback();
-        }
-
-        public TRepository Repository<TRepository>() where TRepository : class
-        {
-            var repository = serviceProvider.GetService<TRepository>();
-            if (repository == null)
-            {
-                throw new InvalidOperationException($"O repositório {typeof(TRepository).Name} não está registrado no contêiner de DI.");
-            }
-            return repository;
         }
 
         public void Dispose()

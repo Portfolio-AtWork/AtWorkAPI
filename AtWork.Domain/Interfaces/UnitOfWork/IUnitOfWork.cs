@@ -1,10 +1,10 @@
 ﻿using System.Data;
 
-namespace AtWork.Domain.Interfaces
+namespace AtWork.Domain.Interfaces.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        TRepository Repository<TRepository>() where TRepository : class;
+        IBaseRepository Repository { get; }
         IDbTransaction BeginTransaction();
         Exception? SaveChangesAsync();
         void Rollback();
