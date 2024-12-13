@@ -15,4 +15,8 @@
     <ProjectReference Include="..\AtWork.Shared\AtWork.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\Application\" />
+  </ItemGroup>
+
 </Project>

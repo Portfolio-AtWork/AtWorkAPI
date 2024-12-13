@@ -15,14 +15,14 @@ namespace AtWork.Shared.Models
         public NotificationKind Kind { get; set; }
 
         [JsonPropertyName("parameters")]
-        public object Parameters { get; set; }
+        public object Parameters { get; set; } = new { };
 
         public Notification()
         {
             Id = Guid.NewGuid();
             Message = string.Empty;
             Kind = NotificationKind.Error;
-            Parameters = new object();
+            Parameters = new { };
         }
 
         public Notification(string message, NotificationKind kind)
@@ -30,7 +30,7 @@ namespace AtWork.Shared.Models
             Id = Guid.NewGuid();
             Message = message;
             Kind = kind;
-            Parameters = new object();
+            Parameters = new { };
         }
 
         public Notification(string message, NotificationKind kind, object parameters)

@@ -17,10 +17,11 @@ namespace AtWorkAPI
 
             builder.Services.AddMediatR((cfg) =>
             {
+                cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly);
                 cfg.AutoRegisterRequestProcessors = true;
             });
 
-            builder.Services.AddSingleton<IBaseRepository, BaseRepository>();
+            builder.Services.AddScoped<IBaseRepository, BaseRepository>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Adicionar serviços ao contêiner
