@@ -11,7 +11,7 @@ namespace AtWorkAPI.Controllers
     [AllowAnonymous]
     public class LoginController(IMediator mediator) : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("createUsuario")]
         public async Task<ObjectResponse<bool>> Create([FromBody] CreateUsuarioCommand command) => await mediator.Send(command);
     }
 }

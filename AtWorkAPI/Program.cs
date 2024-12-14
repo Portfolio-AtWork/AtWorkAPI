@@ -16,7 +16,7 @@ namespace AtWorkAPI
             var builder = WebApplication.CreateBuilder(args);
 
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString, b => b.MigrationsAssembly("AtWork.Domain")));
+            builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString, b => b.MigrationsAssembly("AtWorkAPI")));
 
             builder.Services.AddDomain();
 

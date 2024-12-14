@@ -1,4 +1,5 @@
 ﻿using AtWork.Shared.Enums.Models;
+using FluentValidation.Results;
 using System.Text.Json.Serialization;
 
 namespace AtWork.Shared.Models
@@ -41,6 +42,14 @@ namespace AtWork.Shared.Models
         public void AddNotification(string message, NotificationKind kind, object parameters)
         {
             Notifications.Add(new(message, kind, parameters));
+        }
+
+        public void AddNotifications(List<ValidationFailure> errors)
+        {
+            errors.ForEach(errors =>
+            {
+                AddNotification(errors.ErrorMessage ?? "", NotificationKind.Warning);
+            });
         }
     }
 }

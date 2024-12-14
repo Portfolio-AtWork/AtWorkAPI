@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AtWork.Domain.Application.Usuario.Commands;
+using AtWork.Domain.Application.Usuario.Validators;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AtWork.Domain
 {
@@ -7,6 +10,8 @@ namespace AtWork.Domain
         public static void AddDomain(this IServiceCollection services)
         {
             services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+
+            services.AddScoped<IValidator<CreateUsuarioCommand>, CreateUsuarioValidator>();
         }
     }
 }
