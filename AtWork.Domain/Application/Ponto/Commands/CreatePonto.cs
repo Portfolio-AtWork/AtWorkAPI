@@ -26,7 +26,9 @@ namespace AtWork.Domain.Application.Ponto.Commands
 
             await unitOfWork.Repository.AddAsync(ponto, cancellationToken);
 
-            result.Value = unitOfWork.SaveChangesAsync().Ok();
+            Exception? error = await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            result.Value = error.Ok();
             return result;
         }
     }

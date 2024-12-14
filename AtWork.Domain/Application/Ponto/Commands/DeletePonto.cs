@@ -36,7 +36,9 @@ namespace AtWork.Domain.Application.Ponto.Commands
                 await unitOfWork.Repository.UpdateAsync(ponto, cancellationToken);
             }
 
-            result.Value = unitOfWork.SaveChangesAsync().Ok();
+            Exception? error = await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            result.Value = error.Ok();
             return result;
         }
     }

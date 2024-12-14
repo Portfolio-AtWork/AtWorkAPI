@@ -3,7 +3,7 @@ using AtWork.Shared.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AtWork.Domain.Application.Ponto.Commands
+namespace AtWork.Domain.Application.Ponto.Requests
 {
     public record GetPontoByFuncionarioRequest(Guid ID_Funcionario) : IRequest<ObjectResponse<List<GetPontoByFuncionarioResult>>>;
     public record GetPontoByFuncionarioResult(Guid ID, Guid ID_Funcionario, DateTime DT_Ponto, string ST_Ponto);

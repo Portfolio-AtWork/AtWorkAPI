@@ -1,6 +1,9 @@
+using AtWork.Domain;
 using AtWork.Domain.Database;
+using AtWork.Domain.Interfaces.Services.Auth;
 using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Infra.UnitOfWork;
+using AtWork.Services.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -13,16 +16,14 @@ namespace AtWorkAPI
             var builder = WebApplication.CreateBuilder(args);
 
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString));
+            builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString, b => b.MigrationsAssembly("AtWork.Domain")));
 
-            builder.Services.AddMediatR((cfg) =>
-            {
-                cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly);
-                cfg.AutoRegisterRequestProcessors = true;
-            });
+            builder.Services.AddDomain();
 
             builder.Services.AddScoped<IBaseRepository, BaseRepository>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 
             // Adicionar serviços ao contêiner
             builder.Services.AddControllers();

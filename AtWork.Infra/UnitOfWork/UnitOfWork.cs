@@ -12,6 +12,7 @@ namespace AtWork.Infra.UnitOfWork
     ) : IUnitOfWork
     {
         public IBaseRepository Repository { get; } = baseRepository;
+
         private IDbTransaction? transaction;
 
         public IDbTransaction BeginTransaction()
@@ -25,11 +26,11 @@ namespace AtWork.Infra.UnitOfWork
             return transaction;
         }
 
-        public Exception? SaveChangesAsync()
+        public async Task<Exception?> SaveChangesAsync(CancellationToken ct)
         {
             try
             {
-                context.SaveChanges();
+                await context.SaveChangesAsync(ct);
                 transaction?.Commit();
                 return null;
             }

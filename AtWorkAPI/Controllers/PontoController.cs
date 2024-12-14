@@ -1,4 +1,5 @@
 ﻿using AtWork.Domain.Application.Ponto.Commands;
+using AtWork.Domain.Application.Ponto.Requests;
 using AtWork.Shared.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,8 @@ namespace AtWorkAPI.Controllers
     [Route("api/ponto")]
     public class PontoController(IMediator mediator) : ControllerBase
     {
+
+
         [HttpGet]
         public async Task<ObjectResponse<List<GetPontoByFuncionarioResult>>> Index([FromQuery] GetPontoByFuncionarioRequest request) => await mediator.Send(request);
 

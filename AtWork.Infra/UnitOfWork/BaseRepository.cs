@@ -10,8 +10,8 @@ namespace AtWork.Infra.UnitOfWork
     {
         public async Task<TEntity?> AddAsync<TEntity>(TEntity entity, CancellationToken ct) where TEntity : BaseEntity
         {
-            entity.DT_Cad = DateTime.Now;
-            entity.DT_Alt = DateTime.Now;
+            entity.DT_Cad = DateTime.UtcNow;
+            entity.DT_Alt = DateTime.UtcNow;
 
             await db.AddAsync(entity, ct);
 
@@ -33,7 +33,7 @@ namespace AtWork.Infra.UnitOfWork
 
         public async Task<bool> UpdateAsync<TEntity>(TEntity entity, CancellationToken ct) where TEntity : BaseEntity
         {
-            entity.DT_Alt = DateTime.Now;
+            entity.DT_Alt = DateTime.UtcNow;
 
             db.Update(entity);
 

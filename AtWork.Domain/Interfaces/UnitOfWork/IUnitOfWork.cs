@@ -6,7 +6,7 @@ namespace AtWork.Domain.Interfaces.UnitOfWork
     {
         IBaseRepository Repository { get; }
         IDbTransaction BeginTransaction();
-        Exception? SaveChangesAsync();
+        Task<Exception?> SaveChangesAsync(CancellationToken ct);
         void Rollback();
     }
 }
