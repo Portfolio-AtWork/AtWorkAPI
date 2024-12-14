@@ -1,9 +1,12 @@
 using AtWork.Domain;
 using AtWork.Domain.Database;
 using AtWork.Domain.Interfaces.Services.Auth;
+using AtWork.Domain.Interfaces.Services.Validator;
 using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Infra.UnitOfWork;
 using AtWork.Services.Auth;
+using AtWork.Services.Validator;
+using AtWorkAPI.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -24,6 +27,8 @@ namespace AtWorkAPI
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
+            builder.Services.AddScoped(typeof(IBaseValidator<,>), typeof(BaseValidator<,>));
+
 
             // Adicionar serviços ao contêiner
             builder.Services.AddControllers();
@@ -40,6 +45,8 @@ namespace AtWorkAPI
             });
 
             var app = builder.Build();
+
+            app.UseMiddleware<AtWorkMiddleware>();
 
             // Configurar o pipeline de requisição HTTP
             if (app.Environment.IsDevelopment())

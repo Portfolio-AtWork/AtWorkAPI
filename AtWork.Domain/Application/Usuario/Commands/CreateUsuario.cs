@@ -1,11 +1,12 @@
 ﻿using AtWork.Domain.Database.Entities;
 using AtWork.Domain.Interfaces.Services.Auth;
+using AtWork.Domain.Interfaces.Services.Validator;
 using AtWork.Domain.Interfaces.UnitOfWork;
+using AtWork.Shared.Enums.Models;
 using AtWork.Shared.Extensions;
 using AtWork.Shared.Models;
 using AtWork.Shared.Structs;
 using AtWork.Shared.Structs.Messages;
-using FluentValidation;
 using MediatR;
 
 namespace AtWork.Domain.Application.Usuario.Commands
@@ -21,16 +22,15 @@ namespace AtWork.Domain.Application.Usuario.Commands
     public class CreateUsuarioHandler(
         IUnitOfWork unitOfWork,
         IPasswordHashService passwordHashService,
-        IValidator<CreateUsuarioCommand> validator
+        IBaseValidator<CreateUsuarioCommand, bool> validator
     ) : IRequestHandler<CreateUsuarioCommand, ObjectResponse<bool>>
     {
         public async Task<ObjectResponse<bool>> Handle(CreateUsuarioCommand command, CancellationToken cancellationToken)
         {
             ObjectResponse<bool> result = new();
 
-            if (!await IsValid(command, result, cancellationToken))
+            if (!await validator.IsValidAsync(command, result, cancellationToken))
             {
-                result.Value = false;
                 return result;
             }
 
@@ -53,29 +53,16 @@ namespace AtWork.Domain.Application.Usuario.Commands
 
             if (saved)
             {
-                result.AddNotification(MessagesStruct.SUCESSO_AO_SALVAR_REGISTRO, Shared.Enums.Models.NotificationKind.Success);
+                result.AddNotification(MessagesStruct.SUCESSO_AO_SALVAR_REGISTRO, NotificationKind.Success);
                 result.Value = true;
             }
             else
             {
-                result.AddNotification(MessagesStruct.FALHA_AO_SALVAR_REGISTRO, Shared.Enums.Models.NotificationKind.Success);
+                result.AddNotification(MessagesStruct.FALHA_AO_SALVAR_REGISTRO, NotificationKind.Warning);
                 result.Value = false;
             }
 
             return result;
-        }
-
-        private async Task<bool> IsValid(CreateUsuarioCommand command, ObjectResponse<bool> result, CancellationToken cancellationToken)
-        {
-            var validation = await validator.ValidateAsync(command, cancellationToken);
-
-            if (!validation.IsValid)
-            {
-                result.AddNotifications(validation.Errors);
-                return false;
-            }
-
-            return true;
         }
     }
 }
