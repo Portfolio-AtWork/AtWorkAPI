@@ -28,6 +28,7 @@ namespace AtWorkAPI.Middlewares
 
             object errorResponse = new
             {
+                value = null as string,
                 notifications,
                 ok = false
             };
