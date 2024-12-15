@@ -13,5 +13,7 @@
         public const string SENHA_EH_OBRIGATORIO = "Senha é obrigatório";
         public const string SENHA_DE_CONFIRMACAO_EH_OBRIGATORIO = "Senha de confirmação é obrigatório";
         public const string NOME_EH_OBRIGATORIO = "Nome é obrigatório";
+        public const string TIPO_LOGIN_INFORMADO_NAO_EH_VALIDO = "Tipo de login informado não é válido";
+        public const string USUARIO_OU_SENHA_INCORRETOS = "Usuário ou senha incorretos";
     }
 }

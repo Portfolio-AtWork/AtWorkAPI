@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\Login\Validators\" />
     <Folder Include="Interfaces\Application\" />
   </ItemGroup>
 

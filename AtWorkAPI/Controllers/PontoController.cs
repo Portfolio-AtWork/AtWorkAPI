@@ -2,11 +2,13 @@
 using AtWork.Domain.Application.Ponto.Requests;
 using AtWork.Shared.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AtWorkAPI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/ponto")]
     public class PontoController(IMediator mediator) : ControllerBase
     {
