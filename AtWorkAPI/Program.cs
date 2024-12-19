@@ -101,6 +101,16 @@ namespace AtWorkAPI
                 };
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
 
             app.UseMiddleware<AtWorkMiddleware>();
@@ -120,6 +130,8 @@ namespace AtWorkAPI
             app.UseHttpsRedirection();
             app.UseAuthentication(); // Certifique-se de adicionar este middleware antes do Authorization
             app.UseAuthorization();
+
+            app.UseCors("AllowAll");
 
             app.MapControllers();
 

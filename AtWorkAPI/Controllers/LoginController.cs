@@ -20,7 +20,7 @@ namespace AtWorkAPI.Controllers
         public async Task<ObjectResponse<bool>> Create([FromBody] CreateUsuarioCommand command) => await mediator.Send(command);
 
         [HttpPost("auth")]
-        public async Task<IActionResult> Login(AuthRequest request)
+        public async Task<IActionResult> Login([FromBody] AuthRequest request)
         {
             ObjectResponse<AuthResult?> login = await mediator.Send(request);
 
@@ -28,7 +28,8 @@ namespace AtWorkAPI.Controllers
             {
                 return BadRequest(new
                 {
-                    token = null as string,
+                    token = "",
+                    nome = "",
                     login = login.Value,
                     notifications = login.Notifications,
                     ok = login.Ok,
@@ -61,6 +62,7 @@ namespace AtWorkAPI.Controllers
                 login = login.Value,
                 notifications = login.Notifications,
                 ok = login.Ok,
+                nome = login.Value.Nome
             });
         }
     }

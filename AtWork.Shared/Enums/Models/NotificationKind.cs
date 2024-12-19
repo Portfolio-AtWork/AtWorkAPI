@@ -2,9 +2,9 @@
 {
     public enum NotificationKind
     {
-        Success = 0,
-        Information = 1,
-        Warning = 2,
-        Error = 3,
+        Success = 1,
+        Information = 2,
+        Warning = 3,
+        Error = 4,
     }
 }
