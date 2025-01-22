@@ -15,5 +15,7 @@
         public const string NOME_EH_OBRIGATORIO = "Nome é obrigatório";
         public const string TIPO_LOGIN_INFORMADO_NAO_EH_VALIDO = "Tipo de login informado não é válido";
         public const string USUARIO_OU_SENHA_INCORRETOS = "Usuário ou senha incorretos";
+        public const string ERRO_AO_CADASTRAR_GRUPO = "Erro ao cadastrar grupo";
+        public const string ERRO_AO_CADASTRAR_GRUPO_X_ADM = "Erro ao cadastrar grupo x usuário";
     }
 }

@@ -9,7 +9,7 @@ namespace AtWorkAPI.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("api/ponto")]
+    [Route("api/[controller]")]
     public class PontoController(IMediator mediator) : ControllerBase
     {
         [HttpGet]

@@ -1,4 +1,5 @@
 using AtWork.Domain;
+using AtWork.Domain.Base;
 using AtWork.Domain.Database;
 using AtWork.Domain.Interfaces.Services.Auth;
 using AtWork.Domain.Interfaces.Services.Validator;
@@ -33,7 +34,13 @@ namespace AtWorkAPI
             builder.Services.AddScoped(typeof(IBaseValidator<,>), typeof(BaseValidator<,>));
 
             // Adicionar serviços ao contêiner
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null; // Desativa a conversão para minúsculas
+            });
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddScoped<UserInfo>();
 
             // Configurar o Swagger/OpenAPI
             builder.Services.AddSwaggerGen(c =>

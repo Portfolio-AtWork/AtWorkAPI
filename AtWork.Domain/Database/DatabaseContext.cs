@@ -9,6 +9,7 @@ namespace AtWork.Domain.Database
         public DbSet<TB_Funcionario> TB_Funcionario { get; set; }
         public DbSet<TB_Grupo> TB_Grupo { get; set; }
         public DbSet<TB_Ponto> TB_Ponto { get; set; }
+        public DbSet<TB_Grupo_X_Admin> TB_Grupo_X_Admin { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
