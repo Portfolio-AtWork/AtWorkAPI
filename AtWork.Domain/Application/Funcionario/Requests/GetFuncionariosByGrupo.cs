@@ -4,7 +4,7 @@ using AtWork.Shared.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AtWork.Domain.Application.Funcionario.Request
+namespace AtWork.Domain.Application.Funcionario.Requests
 {
     public record GetFuncionariosByGrupoRequest(Guid ID_Grupo) : IRequest<ObjectResponse<List<GetFuncionariosByGrupoResult>>>;
     public record GetFuncionariosByGrupoResult(Guid ID, string Nome, string Email, string ST_Status);

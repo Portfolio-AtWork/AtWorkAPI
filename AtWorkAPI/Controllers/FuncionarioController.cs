@@ -1,4 +1,4 @@
-﻿using AtWork.Domain.Application.Funcionario.Request;
+﻿using AtWork.Domain.Application.Funcionario.Requests;
 using AtWork.Shared.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -13,5 +13,8 @@ namespace AtWorkAPI.Controllers
     {
         [HttpGet("getFuncionariosByGrupo")]
         public async Task<ObjectResponse<List<GetFuncionariosByGrupoResult>>> GetFuncionariosByGrupo([FromQuery] GetFuncionariosByGrupoRequest request) => await mediator.Send(request);
+
+        [HttpPost("createFuncionario")]
+        public async Task<ObjectResponse<bool>> CreateFuncionario([FromBody] CreateFuncionarioCommand command) => await mediator.Send(command);
     }
 }

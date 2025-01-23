@@ -17,5 +17,6 @@
         public const string USUARIO_OU_SENHA_INCORRETOS = "Usuário ou senha incorretos";
         public const string ERRO_AO_CADASTRAR_GRUPO = "Erro ao cadastrar grupo";
         public const string ERRO_AO_CADASTRAR_GRUPO_X_ADM = "Erro ao cadastrar grupo x usuário";
+        public const string FUNCIONARIO_JA_CADASTRADO = "Funcionário com este login já foi cadastrado";
     }
 }

@@ -1,4 +1,6 @@
-﻿using AtWork.Domain.Application.Usuario.Commands;
+﻿using AtWork.Domain.Application.Funcionario.Commands;
+using AtWork.Domain.Application.Funcionario.Validators;
+using AtWork.Domain.Application.Usuario.Commands;
 using AtWork.Domain.Application.Usuario.Validators;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +14,7 @@ namespace AtWork.Domain
             services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 
             services.AddScoped<IValidator<CreateUsuarioCommand>, CreateUsuarioValidator>();
+            services.AddScoped<IValidator<CreateFuncionarioCommand>, CreateFuncionarioValidator>();
         }
     }
 }
