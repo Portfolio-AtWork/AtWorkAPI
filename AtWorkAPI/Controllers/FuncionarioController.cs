@@ -1,4 +1,5 @@
-﻿using AtWork.Domain.Application.Funcionario.Requests;
+﻿using AtWork.Domain.Application.Funcionario.Commands;
+using AtWork.Domain.Application.Funcionario.Requests;
 using AtWork.Shared.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

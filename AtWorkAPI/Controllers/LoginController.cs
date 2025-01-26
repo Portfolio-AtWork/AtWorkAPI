@@ -30,6 +30,7 @@ namespace AtWorkAPI.Controllers
                 {
                     token = "",
                     nome = "",
+                    email = "",
                     login = login.Value,
                     notifications = login.Notifications,
                     ok = login.Ok,
@@ -60,6 +61,7 @@ namespace AtWorkAPI.Controllers
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 login = login.Value,
+                email = login.Value.Email,
                 notifications = login.Notifications,
                 ok = login.Ok,
                 nome = login.Value.Nome
