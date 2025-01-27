@@ -9,7 +9,7 @@ namespace AtWorkAPI.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class GrupoController(IMediator mediator) : ControllerBase
     {
         [HttpGet("getGruposByLogin")]

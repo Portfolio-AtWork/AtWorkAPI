@@ -12,7 +12,7 @@ using System.Text;
 namespace AtWorkAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [AllowAnonymous]
     public class LoginController(IMediator mediator, IConfiguration configuration) : ControllerBase
     {
