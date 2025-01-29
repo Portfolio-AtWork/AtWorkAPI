@@ -12,10 +12,10 @@ namespace AtWorkAPI.Controllers
     [Route("[controller]")]
     public class GrupoController(IMediator mediator) : ControllerBase
     {
-        [HttpGet("getGruposByLogin")]
+        [HttpGet("byLogin")]
         public async Task<ObjectResponse<List<GetGruposByLoginResult>>> GetGruposByLogin([FromQuery] GetGruposByLoginRequest request) => await mediator.Send(request);
 
-        [HttpPost("createGrupo")]
+        [HttpPost]
         public async Task<ObjectResponse<bool>> CreateGrupo([FromBody] CreateGrupoCommand command) => await mediator.Send(command);
     }
 }

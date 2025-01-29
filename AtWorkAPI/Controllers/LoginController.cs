@@ -1,5 +1,4 @@
 ﻿using AtWork.Domain.Application.Login.Request;
-using AtWork.Domain.Application.Usuario.Commands;
 using AtWork.Shared.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +15,6 @@ namespace AtWorkAPI.Controllers
     [AllowAnonymous]
     public class LoginController(IMediator mediator, IConfiguration configuration) : ControllerBase
     {
-        [HttpPost("createUsuario")]
-        public async Task<ObjectResponse<bool>> Create([FromBody] CreateUsuarioCommand command) => await mediator.Send(command);
-
         [HttpPost("auth")]
         public async Task<IActionResult> Login([FromBody] AuthRequest request)
         {

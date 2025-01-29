@@ -12,10 +12,10 @@ namespace AtWorkAPI.Controllers
     [Route("[controller]")]
     public class FuncionarioController(IMediator mediator) : ControllerBase
     {
-        [HttpGet("getFuncionariosByGrupo")]
+        [HttpGet("byGrupo")]
         public async Task<ObjectResponse<List<GetFuncionariosByGrupoResult>>> GetFuncionariosByGrupo([FromQuery] GetFuncionariosByGrupoRequest request) => await mediator.Send(request);
 
-        [HttpPost("createFuncionario")]
+        [HttpPost]
         public async Task<ObjectResponse<bool>> CreateFuncionario([FromBody] CreateFuncionarioCommand command) => await mediator.Send(command);
     }
 }
