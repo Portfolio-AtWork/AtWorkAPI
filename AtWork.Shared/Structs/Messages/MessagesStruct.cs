@@ -22,5 +22,6 @@
         public const string FALHA_AO_CANCELAR_REGISTRO = "Falha ao cancelar registro";
         public const string SUCESSO_AO_APROVAR_REGISTRO = "Sucesso ao aprovar registro";
         public const string FALHA_AO_APROVAR_REGISTRO = "Falha ao aprovar registro";
+        public const string DATA_INFORMADA_NAO_EH_VALIDA = "Data informada não é válida";
     }
 }
