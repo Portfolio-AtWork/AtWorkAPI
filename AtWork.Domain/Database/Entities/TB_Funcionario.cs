@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AtWork.Domain.Database.Entities
 {
+    [Table("tb_funcionario")]
     public class TB_Funcionario : BaseEntity
     {
         [Required]

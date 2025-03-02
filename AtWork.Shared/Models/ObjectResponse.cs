@@ -46,9 +46,9 @@ namespace AtWork.Shared.Models
 
         public void AddNotifications(List<ValidationFailure> errors)
         {
-            errors.ForEach(errors =>
+            errors.ForEach(error =>
             {
-                AddNotification(errors.ErrorMessage ?? "", NotificationKind.Warning);
+                AddNotification(error.ErrorMessage ?? "", NotificationKind.Warning, error.AttemptedValue);
             });
         }
     }

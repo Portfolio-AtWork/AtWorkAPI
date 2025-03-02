@@ -18,5 +18,9 @@
         public const string ERRO_AO_CADASTRAR_GRUPO = "Erro ao cadastrar grupo";
         public const string ERRO_AO_CADASTRAR_GRUPO_X_ADM = "Erro ao cadastrar grupo x usuário";
         public const string FUNCIONARIO_JA_CADASTRADO = "Funcionário com este login já foi cadastrado";
+        public const string SUCESSO_AO_CANCELAR_REGISTRO = "Sucesso ao cancelar registro";
+        public const string FALHA_AO_CANCELAR_REGISTRO = "Falha ao cancelar registro";
+        public const string SUCESSO_AO_APROVAR_REGISTRO = "Sucesso ao aprovar registro";
+        public const string FALHA_AO_APROVAR_REGISTRO = "Falha ao aprovar registro";
     }
 }

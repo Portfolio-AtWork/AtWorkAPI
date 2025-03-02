@@ -47,5 +47,11 @@ namespace AtWork.Infra.UnitOfWork
             int changed = await db.SaveChangesAsync(ct);
             return changed > 0;
         }
+
+        public async Task<List<TEntity>> GetListAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, CancellationToken ct) where TEntity : BaseEntity
+        {
+            List<TEntity> first = await db.Set<TEntity>().Where(predicate).ToListAsync(ct);
+            return first;
+        }
     }
 }

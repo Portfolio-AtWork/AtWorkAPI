@@ -1,6 +1,7 @@
 ﻿using AtWork.Domain.Base;
 using AtWork.Domain.Database;
 using AtWork.Shared.Models;
+using AtWork.Shared.Structs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,7 @@ namespace AtWork.Domain.Application.Funcionario.Requests
             ObjectResponse<List<GetFuncionariosByGrupoResult>> result = new();
 
             List<GetFuncionariosByGrupoResult> funcionarios = await (from a in db.TB_Funcionario
-                                                                     where a.ID_Grupo == request.ID_Grupo && a.ID_Usuario == userInfo.ID_Usuario
+                                                                     where a.ID_Grupo == request.ID_Grupo && a.ID_Usuario == userInfo.ID_Usuario && a.ST_Status == StatusRegistro.Ativo
                                                                      select new GetFuncionariosByGrupoResult(a.ID, a.Nome, a.Email, a.ST_Status)).ToListAsync(cancellationToken);
 
             result.Value = funcionarios;

@@ -23,5 +23,12 @@ namespace AtWorkAPI.Controllers
 
         [HttpDelete]
         public async Task<ObjectResponse<bool>> Delete([FromQuery] DeletePontoCommand command) => await mediator.Send(command);
+
+        [HttpPut("approvePonto")]
+        public async Task<ObjectResponse<bool>> ApprovePonto([FromBody] ApprovePontoCommand command) => await mediator.Send(command);
+
+        [HttpPut("cancelPonto")]
+        public async Task<ObjectResponse<bool>> CancelPonto([FromBody] CancelPontoCommand command) => await mediator.Send(command);
+
     }
 }

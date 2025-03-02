@@ -17,5 +17,8 @@ namespace AtWorkAPI.Controllers
 
         [HttpPost]
         public async Task<ObjectResponse<bool>> CreateFuncionario([FromBody] CreateFuncionarioCommand command) => await mediator.Send(command);
+
+        [HttpPut("cancel")]
+        public async Task<ObjectResponse<bool>> CancelFuncionario([FromBody] CancelFuncionarioCommand command) => await mediator.Send(command);
     }
 }
