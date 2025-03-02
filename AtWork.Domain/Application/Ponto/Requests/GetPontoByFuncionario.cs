@@ -24,12 +24,13 @@ namespace AtWork.Domain.Application.Ponto.Requests
             }
 
             DateTime dtInit = request.DT_Ponto.GetFirstMomentOfDate();
-            DateTime dtEnd = request.DT_Ponto.GetLastMomentOfDate();
+            //FIX DEPOIS
+            //DateTime dtEnd = request.DT_Ponto.GetLastMomentOfDate();
 
             var query = await db.TB_Ponto
                                 .Where(a => a.ID_Funcionario == request.ID_Funcionario &&
-                                            a.DT_Ponto >= dtInit &&
-                                            a.DT_Ponto <= dtEnd)
+                                            a.DT_Ponto >= dtInit) //&&
+                                                                  //a.DT_Ponto <= dtEnd)
                                 .Select(a => new GetPontoByFuncionarioResult(a.ID, a.ID_Funcionario, a.DT_Ponto, a.ST_Ponto))
                                 .ToListAsync(cancellationToken);
 
