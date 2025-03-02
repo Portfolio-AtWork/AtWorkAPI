@@ -4,7 +4,7 @@
     {
         public static DateTime GetFirstMomentOfDate(this DateTime dateTime)
         {
-            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0);
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 1, DateTimeKind.Utc);
         }
 
         public static DateTime GetFirstMomentOfDateOrDefault(this DateTime? dateTime)
@@ -12,12 +12,12 @@
             if (dateTime == null)
                 return DateTime.MinValue;
 
-            return new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day, 0, 0, 0);
+            return new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day, 0, 0, 1, DateTimeKind.Utc);
         }
 
         public static DateTime GetLastMomentOfDate(this DateTime dateTime)
         {
-            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 23, 59, 59);
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 23, 59, 59, DateTimeKind.Utc);
         }
 
         public static DateTime GetLastMomentOfDateOrDefault(this DateTime? dateTime)
@@ -25,7 +25,7 @@
             if (dateTime == null)
                 return DateTime.MinValue;
 
-            return new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day, 23, 59, 59);
+            return new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day, 23, 59, 59, DateTimeKind.Utc);
         }
 
         public static bool HasValue(this DateTime dateTime)
