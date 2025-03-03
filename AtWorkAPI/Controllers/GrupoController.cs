@@ -17,5 +17,8 @@ namespace AtWorkAPI.Controllers
 
         [HttpPost]
         public async Task<ObjectResponse<bool>> CreateGrupo([FromBody] CreateGrupoCommand command) => await mediator.Send(command);
+
+        [HttpDelete("deleteGrupos")]
+        public async Task<ObjectResponse<bool>> DeleteGrupos([FromBody] DeleteGruposCommand command) => await mediator.Send(command);
     }
 }

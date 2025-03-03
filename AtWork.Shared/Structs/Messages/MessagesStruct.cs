@@ -23,5 +23,7 @@
         public const string SUCESSO_AO_APROVAR_REGISTRO = "Sucesso ao aprovar registro";
         public const string FALHA_AO_APROVAR_REGISTRO = "Falha ao aprovar registro";
         public const string DATA_INFORMADA_NAO_EH_VALIDA = "Data informada não é válida";
+        public const string SUCESSO_AO_DELETAR_REGISTRO = "Sucesso ao deletar registro";
+        public const string FALHA_AO_DELETAR_REGISTRO = "Falha ao deletar registro";
     }
 }
