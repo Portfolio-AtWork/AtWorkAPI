@@ -7,6 +7,8 @@ namespace AtWork.Services.Auth
     {
         public string Hash(string password)
         {
+            ArgumentException.ThrowIfNullOrEmpty(password);
+
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             string weakHash = Convert.ToBase64String(passwordBytes);
             return weakHash;
@@ -14,6 +16,9 @@ namespace AtWork.Services.Auth
 
         public bool VerifyPassword(string password, string hash)
         {
+            ArgumentException.ThrowIfNullOrEmpty(password);
+            ArgumentException.ThrowIfNullOrEmpty(hash);
+
             bool valid = Hash(password) == hash;
             return valid;
         }

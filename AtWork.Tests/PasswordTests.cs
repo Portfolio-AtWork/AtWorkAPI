@@ -17,6 +17,18 @@ namespace AtWork.Tests
             Assert.Equal(expectedHash, generatedHash);
         }
 
+        [Fact(DisplayName = "Given an empty password, throw exception")]
+        public void GivenAnEmptyPassword_ThrowException()
+        {
+            const string emptyPassword = "";
+
+            var passwordHasher = new PasswordHashService();
+
+            var exception = Assert.Throws<ArgumentException>(() => passwordHasher.Hash(emptyPassword));
+
+            Assert.NotNull(exception);
+        }
+
         [Fact(DisplayName = "Given a hash, verify the password")]
         public void GivenAHash_VerifyThePassword()
         {
@@ -28,6 +40,19 @@ namespace AtWork.Tests
             bool generatedHash = passwordHasher.VerifyPassword(expectedPassword, hash);
 
             Assert.True(generatedHash);
+        }
+
+        [Fact(DisplayName = "Given an empty hash, throw exception")]
+        public void GivenAnEmptyHash_ThrowException()
+        {
+            const string emptyHash = "";
+            const string emptyPassword = "";
+
+            var passwordHasher = new PasswordHashService();
+
+            var exception = Assert.Throws<ArgumentException>(() => passwordHasher.VerifyPassword(emptyHash, emptyPassword));
+
+            Assert.NotNull(exception);
         }
     }
 }
