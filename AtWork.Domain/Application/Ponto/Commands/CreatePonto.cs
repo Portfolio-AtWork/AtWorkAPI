@@ -1,4 +1,5 @@
-﻿using AtWork.Domain.Database.Entities;
+﻿using AtWork.Domain.Base;
+using AtWork.Domain.Database.Entities;
 using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Shared.Extensions;
 using AtWork.Shared.Models;
@@ -7,9 +8,9 @@ using MediatR;
 
 namespace AtWork.Domain.Application.Ponto.Commands
 {
-    public record CreatePontoCommand(Guid ID_Funcionario) : IRequest<ObjectResponse<bool>>;
+    public class CreatePontoCommand() : IRequest<ObjectResponse<bool>>;
 
-    public class CreatePontoHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreatePontoCommand, ObjectResponse<bool>>
+    public class CreatePontoHandler(IUnitOfWork unitOfWork, UserInfo userInfo) : IRequestHandler<CreatePontoCommand, ObjectResponse<bool>>
     {
         public async Task<ObjectResponse<bool>> Handle(CreatePontoCommand command, CancellationToken cancellationToken)
         {
@@ -19,9 +20,9 @@ namespace AtWork.Domain.Application.Ponto.Commands
 
             TB_Ponto ponto = new()
             {
-                DT_Ponto = DateTime.Now,
+                DT_Ponto = DateTime.UtcNow,
                 ST_Ponto = StatusPonto.Aprovado,
-                ID_Funcionario = command.ID_Funcionario
+                ID_Funcionario = userInfo.ID_Funcionario
             };
 
             await unitOfWork.Repository.AddAsync(ponto, cancellationToken);
