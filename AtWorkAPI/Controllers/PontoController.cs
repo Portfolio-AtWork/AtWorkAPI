@@ -12,8 +12,11 @@ namespace AtWorkAPI.Controllers
     [Route("[controller]")]
     public class PontoController(IMediator mediator) : ControllerBase
     {
+        [HttpGet]
+        public async Task<ObjectResponse<List<GetPontosResult>>> Index([FromQuery] GetPontosRequest request) => await mediator.Send(request);
+
         [HttpGet("byFuncionario")]
-        public async Task<ObjectResponse<List<GetPontoByFuncionarioResult>>> Index([FromQuery] GetPontoByFuncionarioRequest request) => await mediator.Send(request);
+        public async Task<ObjectResponse<List<GetPontoByFuncionarioResult>>> GetPontosByFuncionario([FromQuery] GetPontoByFuncionarioRequest request) => await mediator.Send(request);
 
         [HttpPost]
         public async Task<ObjectResponse<bool>> Create([FromBody] CreatePontoCommand command) => await mediator.Send(command);

@@ -7,8 +7,8 @@ namespace AtWork.Domain.Base
     public class UserInfo
     {
         public string Login { get; set; }
-        public Guid ID_Usuario { get; set; }
-        public Guid ID_Funcionario { get; set; }
+        public Guid ID_Usuario { get; set; } = Guid.Empty;
+        public Guid ID_Funcionario { get; set; } = Guid.Empty;
         public string Nome { get; set; }
         public string TP_Login { get; set; }
 
