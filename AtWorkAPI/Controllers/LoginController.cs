@@ -49,7 +49,7 @@ namespace AtWorkAPI.Controllers
                 issuer: configuration["Jwt:Issuer"],
                 audience: configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddYears(1),
                 signingCredentials: creds
             );
 
