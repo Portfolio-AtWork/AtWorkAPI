@@ -25,5 +25,11 @@
         public const string DATA_INFORMADA_NAO_EH_VALIDA = "Data informada não é válida";
         public const string SUCESSO_AO_DELETAR_REGISTRO = "Sucesso ao deletar registro";
         public const string FALHA_AO_DELETAR_REGISTRO = "Falha ao deletar registro";
+        public const string DEVE_INFORMAR_QUAL_FUNCIONARIO = "Deve ser informado qual usuário";
+        public const string NAO_DEVE_INFORMAR_QUAL_FUNCIONARIO = "Não deve ser informado qual usuário";
+        public const string ANO_NAO_PODE_SER_DIFERENTE_DO_ATUAL = "Ano não pode ser diferente do atual";
+        public const string MES_NAO_PODE_SER_DIFERENTE_DO_ATUAL = "Mês não pode ser diferente do atual";
+        public const string DIA_NAO_PODE_SER_MAIOR_QUE_HOJE = "Dia não pode ser maior que hoje";
+        public const string FUNCIONARIO_INFORMADO_NAO_EXISTE = "Funcionário informado não existe";
     }
 }
