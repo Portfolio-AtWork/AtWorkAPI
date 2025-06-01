@@ -2,6 +2,7 @@
 using AtWork.Domain.Base;
 using AtWork.Domain.Database.Entities;
 using AtWork.Domain.Interfaces.UnitOfWork;
+using AtWork.Shared.Structs;
 using AtWork.Shared.Structs.Messages;
 using FluentValidation;
 
@@ -11,14 +12,16 @@ namespace AtWork.Domain.Application.Ponto.Validators
     {
         public CreatePontoManualValidator(UserInfo userInfo, IUnitOfWork unitOfWork)
         {
-            bool ehUsuario = Guid.Empty != userInfo.ID_Usuario;
-            bool ehFuncionario = Guid.Empty != userInfo.ID_Funcionario;
+            bool ehUsuario = userInfo.TP_Login == TipoLogin.Admin;
+            bool ehFuncionario = userInfo.TP_Login == TipoLogin.Funcionario;
 
             RuleFor(x => x).CustomAsync(async (values, context, ct) =>
             {
+                bool foiInformadoFuncionarioNaRequest = values.ID_Funcionario is not null && values.ID_Funcionario != Guid.Empty;
+
                 if (ehUsuario)
                 {
-                    if (values.ID_Funcionario is null || values.ID_Funcionario == Guid.Empty)
+                    if (!foiInformadoFuncionarioNaRequest)
                     {
                         context.AddFailure(MessagesStruct.DEVE_INFORMAR_QUAL_FUNCIONARIO);
                     }
@@ -31,7 +34,7 @@ namespace AtWork.Domain.Application.Ponto.Validators
                         }
                     }
                 }
-                else if (ehFuncionario && !(values.ID_Funcionario ?? Guid.Empty).Equals(Guid.Empty))
+                else if (ehFuncionario && foiInformadoFuncionarioNaRequest)
                 {
                     context.AddFailure(MessagesStruct.NAO_DEVE_INFORMAR_QUAL_FUNCIONARIO);
                 }
