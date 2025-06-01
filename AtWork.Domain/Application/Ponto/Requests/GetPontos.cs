@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AtWork.Domain.Application.Ponto.Requests
 {
-    public class GetPontosRequest : IRequest<ObjectResponse<List<GetPontosResult>>>;
+    public record GetPontosRequest(DateTime DT_Ponto) : IRequest<ObjectResponse<List<GetPontosResult>>>;
 
     public record GetPontosResult(Guid ID, DateTime DT_Ponto, string ST_Ponto, string TP_Ponto);
 
@@ -21,8 +21,13 @@ namespace AtWork.Domain.Application.Ponto.Requests
                 return result;
             }
 
+            DateTime dt_final = request.DT_Ponto.Date.AddHours(23)
+                                                     .AddMinutes(59)
+                                                     .AddSeconds(59)
+                                                     .AddMilliseconds(999);
+
             var pontos = await (from a in db.TB_Ponto
-                                where a.DT_Ponto >= DateTime.UtcNow.Date && a.ID_Funcionario == userInfo.ID_Funcionario
+                                where a.DT_Ponto >= request.DT_Ponto.Date && a.DT_Ponto <= dt_final && a.ID_Funcionario == userInfo.ID_Funcionario
                                 select new GetPontosResult(a.ID_Funcionario, a.DT_Ponto, a.ST_Ponto, a.TP_Ponto))
                                 .ToListAsync(cancellationToken);
 
