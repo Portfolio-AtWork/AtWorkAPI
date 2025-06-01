@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AtWork.Domain.Database.Entities
 {
-    [Table("TB_Horario_X_Dia")]
+    [Table("tb_horario_x_dia")]
     public class TB_Horario_X_Dia : BaseEntity
     {
         [Required]

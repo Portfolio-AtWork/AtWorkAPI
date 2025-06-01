@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AtWork.Domain.Application.Ponto.Requests
 {
     public record GetPontoByFuncionarioRequest(Guid ID_Funcionario, DateTime DT_Ponto) : IRequest<ObjectResponse<List<GetPontoByFuncionarioResult>>>;
-    public record GetPontoByFuncionarioResult(Guid ID, Guid ID_Funcionario, DateTime DT_Ponto, string ST_Ponto);
+    public record GetPontoByFuncionarioResult(Guid ID, Guid ID_Funcionario, DateTime DT_Ponto, string ST_Ponto, string TP_Ponto);
 
     public class GetPontoByFuncionarioHandler(DatabaseContext db) : IRequestHandler<GetPontoByFuncionarioRequest, ObjectResponse<List<GetPontoByFuncionarioResult>>>
     {
@@ -31,7 +31,7 @@ namespace AtWork.Domain.Application.Ponto.Requests
                                 .Where(a => a.ID_Funcionario == request.ID_Funcionario &&
                                             a.DT_Ponto >= dtInit) //&&
                                                                   //a.DT_Ponto <= dtEnd)
-                                .Select(a => new GetPontoByFuncionarioResult(a.ID, a.ID_Funcionario, a.DT_Ponto, a.ST_Ponto))
+                                .Select(a => new GetPontoByFuncionarioResult(a.ID, a.ID_Funcionario, a.DT_Ponto, a.ST_Ponto, a.TP_Ponto))
                                 .ToListAsync(cancellationToken);
 
 

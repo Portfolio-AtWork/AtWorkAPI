@@ -1,6 +1,6 @@
 ﻿namespace AtWork.Shared.Structs
 {
-    public struct DiaDaSemana
+    public readonly struct DiaDaSemana
     {
         public const string Domingo = "DOMINGO";
         public const string Segunda = "SEGUNDA";

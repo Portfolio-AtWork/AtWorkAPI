@@ -21,5 +21,9 @@ namespace AtWork.Domain.Database.Entities
         [StringLength(1)]
         [Column("st_ponto")]
         public string ST_Ponto { get; set; } = null!;
+
+        [StringLength(1)]
+        [Column("tp_ponto")]
+        public string TP_Ponto { get; set; } = null!;
     }
 }
