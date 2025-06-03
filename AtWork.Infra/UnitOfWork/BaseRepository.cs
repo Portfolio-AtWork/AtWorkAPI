@@ -1,6 +1,7 @@
 ﻿using AtWork.Domain.Database;
 using AtWork.Domain.Database.Entities;
 using AtWork.Domain.Interfaces.UnitOfWork;
+using AtWork.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -10,8 +11,8 @@ namespace AtWork.Infra.UnitOfWork
     {
         public async Task<TEntity?> AddAsync<TEntity>(TEntity entity, CancellationToken ct) where TEntity : BaseEntity
         {
-            entity.DT_Cad = DateTime.UtcNow;
-            entity.DT_Alt = DateTime.UtcNow;
+            entity.DT_Cad = DateTime.UtcNow.ToBrazilianTime();
+            entity.DT_Alt = DateTime.UtcNow.ToBrazilianTime();
 
             await db.AddAsync(entity, ct);
 
@@ -33,7 +34,7 @@ namespace AtWork.Infra.UnitOfWork
 
         public async Task<bool> UpdateAsync<TEntity>(TEntity entity, CancellationToken ct) where TEntity : BaseEntity
         {
-            entity.DT_Alt = DateTime.UtcNow;
+            entity.DT_Alt = DateTime.UtcNow.ToBrazilianTime();
 
             db.Update(entity);
 

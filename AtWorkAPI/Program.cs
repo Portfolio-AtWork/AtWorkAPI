@@ -1,18 +1,20 @@
 using AtWork.Domain;
 using AtWork.Domain.Base;
-using AtWork.Domain.Database;
 using AtWork.Domain.Interfaces.Services.Auth;
 using AtWork.Domain.Interfaces.Services.Validator;
 using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Infra.UnitOfWork;
 using AtWork.Services.Auth;
 using AtWork.Services.Validator;
+using AtWorkAPI.Converters;
 using AtWorkAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Globalization;
 using System.Text;
+using TimeZoneConverter;
 
 namespace AtWorkAPI
 {
@@ -20,6 +22,14 @@ namespace AtWorkAPI
     {
         public static void Main(string[] args)
         {
+            // Cultura padrão
+            CultureInfo cultureInfo = new("pt-BR");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+            // Fuso padrão da aplicação (você pode guardar em algum lugar estático)
+            TimeZoneInfo defaultTimeZone = TZConvert.GetTimeZoneInfo("America/Sao_Paulo");
+
             var builder = WebApplication.CreateBuilder(args);
 
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -36,8 +46,11 @@ namespace AtWorkAPI
             // Adicionar serviços ao contêiner
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null; // Desativa a conversão para minúsculas
+                options.JsonSerializerOptions.PropertyNamingPolicy = null; // Desativa a conversão camelCase
+                options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+                options.JsonSerializerOptions.Converters.Add(new NullableDateTimeConverter());
             });
+
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddScoped<UserInfo>();

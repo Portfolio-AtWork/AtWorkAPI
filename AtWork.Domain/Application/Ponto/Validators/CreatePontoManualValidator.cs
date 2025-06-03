@@ -5,11 +5,14 @@ using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Shared.Structs;
 using AtWork.Shared.Structs.Messages;
 using FluentValidation;
+using TimeZoneConverter;
 
 namespace AtWork.Domain.Application.Ponto.Validators
 {
     public class CreatePontoManualValidator : AbstractValidator<CreatePontoManualCommand>
     {
+        private static readonly TimeZoneInfo SaoPauloTimeZone = TZConvert.GetTimeZoneInfo("America/Sao_Paulo");
+
         public CreatePontoManualValidator(UserInfo userInfo, IUnitOfWork unitOfWork)
         {
             bool ehUsuario = userInfo.TP_Login == TipoLogin.Admin;
@@ -27,7 +30,10 @@ namespace AtWork.Domain.Application.Ponto.Validators
                     }
                     else
                     {
-                        TB_Funcionario? func = await unitOfWork.Repository.GetAsync<TB_Funcionario>(item => item.ID == values.ID_Funcionario.Value, ct);
+                        TB_Funcionario? func = await unitOfWork.Repository.GetAsync<TB_Funcionario>(
+                            item => item.ID == values.ID_Funcionario!.Value, ct
+                        );
+
                         if (func is null)
                         {
                             context.AddFailure(MessagesStruct.FUNCIONARIO_INFORMADO_NAO_EXISTE);
@@ -39,22 +45,25 @@ namespace AtWork.Domain.Application.Ponto.Validators
                     context.AddFailure(MessagesStruct.NAO_DEVE_INFORMAR_QUAL_FUNCIONARIO);
                 }
 
-                bool anoDiferente = values.DT_Ponto.Year != DateTime.Today.Year;
-                if (anoDiferente)
+                // Converte DateTime.Today e DT_Ponto para o fuso de São Paulo
+                DateTime hojeSaoPaulo = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.Date, SaoPauloTimeZone);
+                DateTime dtPontoSaoPaulo = values.DT_Ponto.Kind == DateTimeKind.Utc
+                    ? TimeZoneInfo.ConvertTimeFromUtc(values.DT_Ponto, SaoPauloTimeZone)
+                    : values.DT_Ponto;
+
+                if (dtPontoSaoPaulo.Year != hojeSaoPaulo.Year)
                 {
                     context.AddFailure(MessagesStruct.ANO_NAO_PODE_SER_DIFERENTE_DO_ATUAL);
                     return;
                 }
 
-                bool mesDiferente = values.DT_Ponto.Month != DateTime.Today.Month;
-                if (mesDiferente)
+                if (dtPontoSaoPaulo.Month != hojeSaoPaulo.Month)
                 {
                     context.AddFailure(MessagesStruct.MES_NAO_PODE_SER_DIFERENTE_DO_ATUAL);
                     return;
                 }
 
-                bool diaMaiorQueHoje = values.DT_Ponto.Day > DateTime.Today.Day;
-                if (diaMaiorQueHoje)
+                if (dtPontoSaoPaulo.Day > hojeSaoPaulo.Day)
                 {
                     context.AddFailure(MessagesStruct.DIA_NAO_PODE_SER_MAIOR_QUE_HOJE);
                     return;

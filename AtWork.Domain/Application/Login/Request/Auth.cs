@@ -25,7 +25,7 @@ namespace AtWork.Domain.Application.Login.Request
             {
                 TB_Usuario? usuario = await unitOfWork.Repository.GetAsync<TB_Usuario>(item => item.Login == request.Login, cancellationToken);
 
-                if (usuario is null)
+                if (usuario is null || usuario.ST_Status == StatusRegistro.Cancelado)
                 {
                     result.Value = null;
                     result.AddNotification(MessagesStruct.USUARIO_OU_SENHA_INCORRETOS, NotificationKind.Warning);
@@ -47,7 +47,7 @@ namespace AtWork.Domain.Application.Login.Request
             {
                 TB_Funcionario? funcionario = await unitOfWork.Repository.GetAsync<TB_Funcionario>(item => item.Login == request.Login, cancellationToken);
 
-                if (funcionario is null)
+                if (funcionario is null || funcionario.ST_Status == StatusRegistro.Cancelado)
                 {
                     result.Value = null;
                     result.AddNotification(MessagesStruct.USUARIO_OU_SENHA_INCORRETOS, NotificationKind.Warning);

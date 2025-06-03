@@ -1,5 +1,4 @@
 ﻿using AtWork.Domain.Base;
-using AtWork.Domain.Database;
 using AtWork.Domain.Database.Entities;
 using AtWork.Domain.Interfaces.Services.Validator;
 using AtWork.Domain.Interfaces.UnitOfWork;
@@ -36,7 +35,7 @@ namespace AtWork.Domain.Application.Ponto.Commands
 
             TB_Ponto ponto = new()
             {
-                DT_Ponto = command.DT_Ponto,
+                DT_Ponto = command.DT_Ponto.ToBrazilianTime(),
                 ST_Ponto = StatusPonto.PendenteAprovacao,
                 ID_Funcionario = id_funcionario,
                 TP_Ponto = tp_ponto

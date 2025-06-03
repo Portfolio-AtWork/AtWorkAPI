@@ -1,5 +1,5 @@
 ﻿using AtWork.Domain.Base;
-using AtWork.Domain.Database;
+using AtWork.Shared.Extensions;
 using AtWork.Shared.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +21,12 @@ namespace AtWork.Domain.Application.Ponto.Requests
                 return result;
             }
 
-            DateTime dt_final = request.DT_Ponto.Date.AddHours(23)
-                                                     .AddMinutes(59)
-                                                     .AddSeconds(59)
-                                                     .AddMilliseconds(999);
+            DateTime dt_ini = request.DT_Ponto.GetFirstMomentOfDate();
+            DateTime dt_final = request.DT_Ponto.GetLastMomentOfDate();
+
 
             var pontos = await (from a in db.TB_Ponto
-                                where a.DT_Ponto >= request.DT_Ponto.Date && a.DT_Ponto <= dt_final && a.ID_Funcionario == userInfo.ID_Funcionario
+                                where a.DT_Ponto >= dt_ini && a.DT_Ponto <= dt_final && a.ID_Funcionario == userInfo.ID_Funcionario
                                 select new GetPontosResult(a.ID_Funcionario, a.DT_Ponto, a.ST_Ponto, a.TP_Ponto))
                                 .ToListAsync(cancellationToken);
 

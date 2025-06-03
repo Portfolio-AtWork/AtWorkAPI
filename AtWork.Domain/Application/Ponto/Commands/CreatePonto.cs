@@ -28,7 +28,7 @@ namespace AtWork.Domain.Application.Ponto.Commands
 
             TB_Ponto ponto = new()
             {
-                DT_Ponto = DateTime.UtcNow,
+                DT_Ponto = DateTime.UtcNow.ToBrazilianTime(),
                 ST_Ponto = StatusPonto.Aprovado,
                 ID_Funcionario = userInfo.ID_Funcionario,
                 TP_Ponto = tp_ponto
