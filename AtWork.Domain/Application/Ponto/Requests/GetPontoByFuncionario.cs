@@ -1,5 +1,4 @@
-﻿using AtWork.Domain.Database;
-using AtWork.Shared.Extensions;
+﻿using AtWork.Shared.Extensions;
 using AtWork.Shared.Models;
 using AtWork.Shared.Structs.Messages;
 using MediatR;
@@ -28,6 +27,7 @@ namespace AtWork.Domain.Application.Ponto.Requests
 
             var pontos = await (from a in db.TB_Ponto
                                 where a.DT_Ponto >= dt_ini && a.DT_Ponto <= dt_final && a.ID_Funcionario == request.ID_Funcionario
+                                orderby a.DT_Ponto
                                 select new GetPontoByFuncionarioResult(a.ID, a.ID_Funcionario, a.DT_Ponto, a.ST_Ponto, a.TP_Ponto))
                                 .ToListAsync(cancellationToken);
 

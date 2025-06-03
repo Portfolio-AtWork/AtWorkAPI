@@ -1,4 +1,5 @@
 ﻿using AtWork.Domain.Database.Entities;
+using AtWork.Domain.Interfaces.Application.Ponto;
 using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Shared.Enums.Models;
 using AtWork.Shared.Extensions;
@@ -12,7 +13,7 @@ namespace AtWork.Domain.Application.Ponto.Commands
 {
     public record CancelPontoCommand(Guid ID_Funcionario, Guid ID_Ponto) : IRequest<ObjectResponse<bool>>;
 
-    public class CancelPontoHandler(IUnitOfWork unitOfWork) : IRequestHandler<CancelPontoCommand, ObjectResponse<bool>>
+    public class CancelPontoHandler(IUnitOfWork unitOfWork, ISincronizaEntradaSaidaService sincronizaEntradaSaidaService) : IRequestHandler<CancelPontoCommand, ObjectResponse<bool>>
     {
         public async Task<ObjectResponse<bool>> Handle(CancelPontoCommand command, CancellationToken cancellationToken)
         {
@@ -30,6 +31,8 @@ namespace AtWork.Domain.Application.Ponto.Commands
 
             ponto.ST_Ponto = StatusPonto.Cancelado;
             await unitOfWork.Repository.UpdateAsync(ponto, cancellationToken);
+
+            await sincronizaEntradaSaidaService.HandleAsync(ponto.DT_Ponto, command.ID_Funcionario, cancellationToken);
 
             bool saved = (await unitOfWork.SaveChangesAsync(cancellationToken)).Ok();
 

@@ -4,6 +4,7 @@ using AtWork.Domain.Interfaces.Services.Auth;
 using AtWork.Domain.Interfaces.Services.Validator;
 using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Infra.UnitOfWork;
+using AtWork.Services;
 using AtWork.Services.Auth;
 using AtWork.Services.Validator;
 using AtWorkAPI.Converters;
@@ -36,6 +37,7 @@ namespace AtWorkAPI
             builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString, b => b.MigrationsAssembly("AtWorkAPI")));
 
             builder.Services.AddDomain();
+            builder.Services.AddServices();
 
             builder.Services.AddScoped<IBaseRepository, BaseRepository>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -1,5 +1,4 @@
 ﻿using AtWork.Domain.Base;
-using AtWork.Domain.Database;
 using AtWork.Domain.Database.Entities;
 using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Shared.Extensions;
@@ -20,8 +19,13 @@ namespace AtWork.Domain.Application.Ponto.Commands
 
             unitOfWork.BeginTransaction();
 
+            DateTime hoje = DateTime.UtcNow.ToBrazilianTime();
+
+            DateTime dt_inicial = hoje.GetFirstMomentOfDate();
+            DateTime dt_final = hoje.GetLastMomentOfDate();
+
             List<TB_Ponto> pontosJaCadastrados = await (from a in db.TB_Ponto
-                                                        where a.DT_Ponto.Date == DateTime.UtcNow.Date && a.ID_Funcionario == userInfo.ID_Funcionario
+                                                        where a.DT_Ponto >= dt_inicial && a.DT_Ponto <= dt_final && a.ID_Funcionario == userInfo.ID_Funcionario && a.ST_Ponto != StatusPonto.Cancelado
                                                         select a).ToListAsync(cancellationToken);
 
             string tp_ponto = EntradaOuSaida(pontosJaCadastrados);

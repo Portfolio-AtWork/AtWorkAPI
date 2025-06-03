@@ -46,7 +46,7 @@ namespace AtWork.Domain.Application.Ponto.Validators
                 }
 
                 // Converte DateTime.Today e DT_Ponto para o fuso de São Paulo
-                DateTime hojeSaoPaulo = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow.Date, SaoPauloTimeZone);
+                DateTime hojeSaoPaulo = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, SaoPauloTimeZone);
                 DateTime dtPontoSaoPaulo = values.DT_Ponto.Kind == DateTimeKind.Utc
                     ? TimeZoneInfo.ConvertTimeFromUtc(values.DT_Ponto, SaoPauloTimeZone)
                     : values.DT_Ponto;
