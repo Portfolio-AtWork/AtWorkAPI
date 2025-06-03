@@ -26,8 +26,8 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
                 if (property.ClrType == typeof(DateTime))
                 {
                     var converter = new ValueConverter<DateTime, DateTime>(
-                        v => TimeZoneInfo.ConvertTimeToUtc(v, saoPauloTimeZone),
-                        v => TimeZoneInfo.ConvertTimeFromUtc(v, saoPauloTimeZone)
+                        v => TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(v, DateTimeKind.Unspecified), saoPauloTimeZone),
+                        v => DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeFromUtc(v, saoPauloTimeZone), DateTimeKind.Unspecified)
                     );
 
                     property.SetValueConverter(converter);
@@ -42,8 +42,8 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
                 else if (property.ClrType == typeof(DateTime?))
                 {
                     var converter = new ValueConverter<DateTime?, DateTime?>(
-                        v => v.HasValue ? TimeZoneInfo.ConvertTimeToUtc(v.Value, saoPauloTimeZone) : null,
-                        v => v.HasValue ? TimeZoneInfo.ConvertTimeFromUtc(v.Value, saoPauloTimeZone) : null
+                        v => v.HasValue ? TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(v.Value, DateTimeKind.Unspecified), saoPauloTimeZone) : null,
+                        v => v.HasValue ? DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeFromUtc(v.Value, saoPauloTimeZone), DateTimeKind.Unspecified) : null
                     );
 
                     property.SetValueConverter(converter);

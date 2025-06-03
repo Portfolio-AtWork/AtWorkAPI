@@ -51,12 +51,24 @@ namespace AtWork.Shared.Extensions
             return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, BrazilTimeZone);
         }
 
-        public static DateTime ToBrazilianTime(this DateTime utcDateTime)
+        public static DateTime ToBrazilianTime(this DateTime dateTime)
         {
-            if (utcDateTime.Kind != DateTimeKind.Utc)
-                throw new ArgumentException("A data deve estar em UTC", nameof(utcDateTime));
+            var brazilTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
 
-            return TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, BrazilTimeZone);
+            // Se a data já estiver no horário do Brasil, apenas retorne
+            if (dateTime.Kind == DateTimeKind.Local &&
+                TimeZoneInfo.Local.Id == brazilTimeZone.Id)
+            {
+                return dateTime;
+            }
+
+            // Se for UTC, converta para o horário do Brasil
+            if (dateTime.Kind == DateTimeKind.Utc)
+            {
+                return TimeZoneInfo.ConvertTimeFromUtc(dateTime, brazilTimeZone);
+            }
+
+            return dateTime;
         }
     }
 }
