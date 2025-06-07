@@ -31,5 +31,7 @@
         public const string MES_NAO_PODE_SER_DIFERENTE_DO_ATUAL = "Mês não pode ser diferente do atual";
         public const string DIA_NAO_PODE_SER_MAIOR_QUE_HOJE = "Dia não pode ser maior que hoje";
         public const string FUNCIONARIO_INFORMADO_NAO_EXISTE = "Funcionário informado não existe";
+        public const string JUSTIFICATIVA_PRECISA_SER_DESTE_MES = "Justificativa precisa ser deste mês";
+        public const string IMAGEM_INFORMADA_NAO_EH_VALIDA = "Imagem informada não é válida";
     }
 }

@@ -8,13 +8,6 @@ namespace AtWork.Domain.Database.Entities
     public class TB_Justificativa : BaseEntity
     {
         [Required]
-        [Column("id_usuario")]
-        public Guid ID_Usuario { get; set; }
-
-        [ForeignKey("ID_Usuario")]
-        public TB_Usuario UsuarioFK { get; set; } = null!;
-
-        [Required]
         [Column("id_funcionario")]
         public Guid ID_Funcionario { get; set; }
 
@@ -28,5 +21,14 @@ namespace AtWork.Domain.Database.Entities
         [AllowNull]
         [Column("imagem_justificativa")]
         public byte[]? ImagemJustificativa { get; set; } = null;
+
+        [Required]
+        [StringLength(1)]
+        [Column("st_status")]
+        public string ST_Justificativa { get; set; } = null!;
+
+        [Required]
+        [Column("dt_justificativa")]
+        public DateTime DT_Justificativa { get; set; }
     }
 }

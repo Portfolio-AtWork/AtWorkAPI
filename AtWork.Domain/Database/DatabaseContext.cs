@@ -13,6 +13,7 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
     public DbSet<TB_Grupo_X_Admin> TB_Grupo_X_Admin { get; set; }
     public DbSet<TB_Horario> TB_Horario { get; set; }
     public DbSet<TB_Horario_X_Dia> TB_Horario_X_Dia { get; set; }
+    public DbSet<TB_Justificativa> TB_Justificativa { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
