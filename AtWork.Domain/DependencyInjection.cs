@@ -1,5 +1,7 @@
 ﻿using AtWork.Domain.Application.Funcionario.Commands;
 using AtWork.Domain.Application.Funcionario.Validators;
+using AtWork.Domain.Application.Justificativa.Commands;
+using AtWork.Domain.Application.Justificativa.Validators;
 using AtWork.Domain.Application.Ponto.Commands;
 using AtWork.Domain.Application.Ponto.Validators;
 using AtWork.Domain.Application.Usuario.Commands;
@@ -18,6 +20,7 @@ namespace AtWork.Domain
             services.AddScoped<IValidator<CreateUsuarioCommand>, CreateUsuarioValidator>();
             services.AddScoped<IValidator<CreateFuncionarioCommand>, CreateFuncionarioValidator>();
             services.AddScoped<IValidator<CreatePontoManualCommand>, CreatePontoManualValidator>();
+            services.AddScoped<IValidator<CreateJustificativaCommand>, CreateJustificativaValidator>();
         }
     }
 }
