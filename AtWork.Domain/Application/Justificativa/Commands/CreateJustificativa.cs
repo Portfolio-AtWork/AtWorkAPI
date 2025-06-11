@@ -28,6 +28,7 @@ namespace AtWork.Domain.Application.Justificativa.Commands
             unitOfWork.BeginTransaction();
 
             byte[]? img = await TrataImagem(command.ImagemJustificativa);
+            string? contentType = TrataContentType(command.ImagemJustificativa);
 
             TB_Justificativa? justificativa = await unitOfWork.Repository.AddAsync(new TB_Justificativa()
             {
@@ -35,7 +36,8 @@ namespace AtWork.Domain.Application.Justificativa.Commands
                 ImagemJustificativa = img,
                 Justificativa = command.Justificativa ?? "",
                 DT_Justificativa = command.DT_Justificativa.ToBrazilianTime(),
-                ST_Justificativa = StatusJustificativa.PendenteAprovacao
+                ST_Justificativa = StatusJustificativa.PendenteAprovacao,
+                ImagemContentType = contentType
             }, cancellationToken);
 
             if (justificativa is null)
@@ -78,6 +80,15 @@ namespace AtWork.Domain.Application.Justificativa.Commands
             }
 
             return fileBytes;
+        }
+
+        private static string? TrataContentType(IFormFile? imagemJustificativa)
+        {
+            if (imagemJustificativa is null || imagemJustificativa.Length == 0)
+                return null;
+
+            string contentType = imagemJustificativa.ContentType.ToLower();
+            return contentType;
         }
     }
 }

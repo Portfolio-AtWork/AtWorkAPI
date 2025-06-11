@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AtWork.Domain.Application.Justificativa.Requests
 {
     public record GetJustificativasRequest(Guid? ID_Funcionario, int Mes, int Ano) : IRequest<ObjectResponse<List<GetJustificativasResult>>>;
-    public record GetJustificativasResult(Guid ID_Justificativa, string Justificativa, byte[]? ImagemJustificativa, string ST_Justificativa, DateTime DT_Justificativa)
+    public record GetJustificativasResult(Guid ID_Justificativa, string Justificativa, byte[]? ImagemJustificativa, string ST_Justificativa, DateTime DT_Justificativa, string? ImagemContentType)
     {
         public bool TemImagemJustificativa => ImagemJustificativa is not null && ImagemJustificativa.Length > 0;
     };
@@ -24,7 +24,7 @@ namespace AtWork.Domain.Application.Justificativa.Requests
                                                                         && a.DT_Justificativa.Month == request.Mes
                                                                         && a.ID_Funcionario == id_justificativa
                                                                   orderby a.DT_Justificativa
-                                                                  select new GetJustificativasResult(a.ID, a.Justificativa, a.ImagemJustificativa, a.ST_Justificativa, a.DT_Justificativa))
+                                                                  select new GetJustificativasResult(a.ID, a.Justificativa, a.ImagemJustificativa, a.ST_Justificativa, a.DT_Justificativa, a.ImagemContentType))
                                                                   .ToListAsync(cancellationToken);
 
             result.Value = justificativas;

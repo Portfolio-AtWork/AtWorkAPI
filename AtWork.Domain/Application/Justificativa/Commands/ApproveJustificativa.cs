@@ -11,6 +11,7 @@ using System.Data;
 namespace AtWork.Domain.Application.Justificativa.Commands
 {
     public record ApproveJustificativaCommand(Guid ID_Funcionario, Guid ID_Justificativa) : IRequest<ObjectResponse<bool>>;
+
     public class ApproveJustificativaHandler(IUnitOfWork unitOfWork) : IRequestHandler<ApproveJustificativaCommand, ObjectResponse<bool>>
     {
         public async Task<ObjectResponse<bool>> Handle(ApproveJustificativaCommand command, CancellationToken cancellationToken)

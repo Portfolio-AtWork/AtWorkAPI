@@ -7,7 +7,7 @@ namespace AtWork.Domain.Application.Justificativa.Validators
 {
     public class CreateJustificativaValidator : AbstractValidator<CreateJustificativaCommand>
     {
-        private readonly static string[] tipo_images = ["image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp"];
+        private readonly static string[] tipo_images = ["image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp", "image/jpg"];
 
         public CreateJustificativaValidator()
         {

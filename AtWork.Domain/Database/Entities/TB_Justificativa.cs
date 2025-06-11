@@ -22,6 +22,10 @@ namespace AtWork.Domain.Database.Entities
         [Column("imagem_justificativa")]
         public byte[]? ImagemJustificativa { get; set; } = null;
 
+        [AllowNull]
+        [Column("imagem_content_type")]
+        public string? ImagemContentType { get; set; } = null;
+
         [Required]
         [StringLength(1)]
         [Column("st_status")]
