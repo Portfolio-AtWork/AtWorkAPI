@@ -1,5 +1,6 @@
 using AtWork.Domain;
 using AtWork.Domain.Base;
+using AtWork.Domain.Database;
 using AtWork.Domain.Interfaces.Services.Auth;
 using AtWork.Domain.Interfaces.Services.Validator;
 using AtWork.Domain.Interfaces.UnitOfWork;
@@ -34,7 +35,7 @@ namespace AtWorkAPI
             var builder = WebApplication.CreateBuilder(args);
 
             string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString, b => b.MigrationsAssembly("AtWorkAPI")));
+            builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString, b => b.MigrationsAssembly("AtWork.Domain")));
 
             builder.Services.AddDomain();
             builder.Services.AddServices();
@@ -134,6 +135,14 @@ namespace AtWorkAPI
             });
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+                db.Database.Migrate(); // Aplica as migrations pendentes
+
+                DatabaseSeeder.Seed(db); // Popula dados iniciais
+            }
 
             app.UseMiddleware<AtWorkMiddleware>();
 

@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Login\Validators\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
