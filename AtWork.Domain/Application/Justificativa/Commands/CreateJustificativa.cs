@@ -8,11 +8,11 @@ using AtWork.Shared.Models;
 using AtWork.Shared.Structs;
 using AtWork.Shared.Structs.Messages;
 using MediatR;
-using Microsoft.AspNetCore.Http;
+using System.Text.RegularExpressions;
 
 namespace AtWork.Domain.Application.Justificativa.Commands
 {
-    public record CreateJustificativaCommand(DateTime DT_Justificativa, IFormFile? ImagemJustificativa, string Justificativa) : IRequest<ObjectResponse<bool>>;
+    public record CreateJustificativaCommand(DateTime DT_Justificativa, string? ImagemJustificativa, string Justificativa) : IRequest<ObjectResponse<bool>>;
 
     public class CreateJustificativaHandler(IUnitOfWork unitOfWork, UserInfo userInfo, IBaseValidator<CreateJustificativaCommand, bool> validator) : IRequestHandler<CreateJustificativaCommand, ObjectResponse<bool>>
     {
@@ -27,8 +27,8 @@ namespace AtWork.Domain.Application.Justificativa.Commands
 
             unitOfWork.BeginTransaction();
 
-            byte[]? img = await TrataImagem(command.ImagemJustificativa);
-            string? contentType = TrataContentType(command.ImagemJustificativa);
+            byte[]? img = TrataImagem(command.ImagemJustificativa);
+            string? contentType = GetMimeTypeFromBase64(command.ImagemJustificativa);
 
             TB_Justificativa? justificativa = await unitOfWork.Repository.AddAsync(new TB_Justificativa()
             {
@@ -62,17 +62,12 @@ namespace AtWork.Domain.Application.Justificativa.Commands
             return result;
         }
 
-        private static async Task<byte[]?> TrataImagem(IFormFile? imagemJustificativa)
+        private static byte[]? TrataImagem(string? imagemJustificativa)
         {
             if (imagemJustificativa is null || imagemJustificativa.Length == 0)
                 return null;
 
-            byte[] fileBytes;
-            using (var memoryStream = new MemoryStream())
-            {
-                await imagemJustificativa.CopyToAsync(memoryStream);
-                fileBytes = memoryStream.ToArray();
-            }
+            byte[] fileBytes = Convert.FromBase64String(imagemJustificativa);
 
             if (fileBytes.Length == 0)
             {
@@ -82,13 +77,13 @@ namespace AtWork.Domain.Application.Justificativa.Commands
             return fileBytes;
         }
 
-        private static string? TrataContentType(IFormFile? imagemJustificativa)
+        private static string? GetMimeTypeFromBase64(string? base64String)
         {
-            if (imagemJustificativa is null || imagemJustificativa.Length == 0)
+            if (string.IsNullOrWhiteSpace(base64String))
                 return null;
 
-            string contentType = imagemJustificativa.ContentType.ToLower();
-            return contentType;
+            var match = Regex.Match(base64String, @"^data:(?<type>[\w/+.-]+);base64,", RegexOptions.IgnoreCase);
+            return match.Success ? match.Groups["type"].Value : null;
         }
     }
 }
