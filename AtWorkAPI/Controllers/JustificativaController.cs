@@ -15,6 +15,9 @@ namespace AtWorkAPI.Controllers
         [HttpGet]
         public async Task<ObjectResponse<List<GetJustificativasResult>>> Index([FromQuery] GetJustificativasRequest request) => await mediator.Send(request);
 
+        [HttpPost]
+        public async Task<ObjectResponse<bool>> Create([FromBody] CreateJustificativaCommand command) => await mediator.Send(command);
+
         [HttpPut("approveJustificativa")]
         public async Task<ObjectResponse<bool>> ApproveJustificativa([FromBody] ApproveJustificativaCommand command) => await mediator.Send(command);
 
