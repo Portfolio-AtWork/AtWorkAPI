@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AtWork.Domain.Database.Entities
 {
+    [ExcludeFromCodeCoverage]
     [Table("tb_usuario")]
     public class TB_Usuario : BaseEntity
     {

@@ -2,13 +2,13 @@
 using AtWork.Domain.Database.Entities;
 using AtWork.Domain.Interfaces.Services.Validator;
 using AtWork.Domain.Interfaces.UnitOfWork;
+using AtWork.Shared.Converters;
 using AtWork.Shared.Enums.Models;
 using AtWork.Shared.Extensions;
 using AtWork.Shared.Models;
 using AtWork.Shared.Structs;
 using AtWork.Shared.Structs.Messages;
 using MediatR;
-using System.Text.RegularExpressions;
 
 namespace AtWork.Domain.Application.Justificativa.Commands
 {
@@ -27,8 +27,8 @@ namespace AtWork.Domain.Application.Justificativa.Commands
 
             unitOfWork.BeginTransaction();
 
-            byte[]? img = TrataImagem(command.ImagemJustificativa);
-            string? contentType = GetMimeTypeFromBase64(command.ImagemJustificativa);
+            byte[]? img = B64_Converter.GetBytesFromBase64String(command.ImagemJustificativa);
+            string? contentType = B64_Converter.GetMimeTypeFromBase64(command.ImagemJustificativa);
 
             TB_Justificativa? justificativa = await unitOfWork.Repository.AddAsync(new TB_Justificativa()
             {
@@ -60,30 +60,6 @@ namespace AtWork.Domain.Application.Justificativa.Commands
             }
 
             return result;
-        }
-
-        private static byte[]? TrataImagem(string? imagemJustificativa)
-        {
-            if (imagemJustificativa is null || imagemJustificativa.Length == 0)
-                return null;
-
-            byte[] fileBytes = Convert.FromBase64String(imagemJustificativa);
-
-            if (fileBytes.Length == 0)
-            {
-                return null;
-            }
-
-            return fileBytes;
-        }
-
-        private static string? GetMimeTypeFromBase64(string? base64String)
-        {
-            if (string.IsNullOrWhiteSpace(base64String))
-                return null;
-
-            var match = Regex.Match(base64String, @"^data:(?<type>[\w/+.-]+);base64,", RegexOptions.IgnoreCase);
-            return match.Success ? match.Groups["type"].Value : null;
         }
     }
 }

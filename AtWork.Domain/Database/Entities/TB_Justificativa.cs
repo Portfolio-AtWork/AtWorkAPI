@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace AtWork.Domain.Database.Entities
 {
+    [ExcludeFromCodeCoverage]
     [Table("tb_justificativa")]
     public class TB_Justificativa : BaseEntity
     {

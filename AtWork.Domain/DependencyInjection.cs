@@ -8,9 +8,11 @@ using AtWork.Domain.Application.Usuario.Commands;
 using AtWork.Domain.Application.Usuario.Validators;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AtWork.Domain
 {
+    [ExcludeFromCodeCoverage]
     public static class DependencyInjection
     {
         public static void AddDomain(this IServiceCollection services)
