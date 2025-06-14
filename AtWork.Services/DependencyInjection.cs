@@ -9,6 +9,7 @@ namespace AtWork.Services
         public static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<ISincronizaEntradaSaidaService, SincronizaEntradaSaidaService>();
+            services.AddScoped<IDefinePontoEhEntradaOuSaidaService, DefinePontoEhEntradaOuSaidaService>();
         }
     }
 }

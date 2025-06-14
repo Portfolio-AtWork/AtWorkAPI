@@ -1,4 +1,5 @@
 ﻿using AtWork.Domain.Application.Justificativa.Commands;
+using AtWork.Shared.Converters;
 using AtWork.Shared.Extensions;
 using AtWork.Shared.Structs.Messages;
 using FluentValidation;
@@ -23,12 +24,11 @@ namespace AtWork.Domain.Application.Justificativa.Validators
 
                 if (values.ImagemJustificativa is not null && values.ImagemJustificativa.Length > 0)
                 {
-                    //TODO
-                    //string contentType = values.ImagemJustificativa.ContentType.ToLower();
-                    //if (!tipo_images.Contains(contentType))
-                    //{
-                        //context.AddFailure(MessagesStruct.IMAGEM_INFORMADA_NAO_EH_VALIDA);
-                    //};
+                    string? contentType = B64_Converter.GetMimeTypeFromBase64(values.ImagemJustificativa);
+                    if (contentType is null || !tipo_images.Contains(contentType))
+                    {
+                        context.AddFailure(MessagesStruct.IMAGEM_INFORMADA_NAO_EH_VALIDA);
+                    };
                 }
             });
         }

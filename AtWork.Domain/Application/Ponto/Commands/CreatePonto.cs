@@ -1,5 +1,6 @@
 ﻿using AtWork.Domain.Base;
 using AtWork.Domain.Database.Entities;
+using AtWork.Domain.Interfaces.Application.Ponto;
 using AtWork.Domain.Interfaces.UnitOfWork;
 using AtWork.Shared.Extensions;
 using AtWork.Shared.Models;
@@ -11,7 +12,12 @@ namespace AtWork.Domain.Application.Ponto.Commands
 {
     public class CreatePontoCommand() : IRequest<ObjectResponse<bool>>;
 
-    public class CreatePontoHandler(IUnitOfWork unitOfWork, UserInfo userInfo, DatabaseContext db) : IRequestHandler<CreatePontoCommand, ObjectResponse<bool>>
+    public class CreatePontoHandler(
+        IUnitOfWork unitOfWork,
+        UserInfo userInfo,
+        DatabaseContext db,
+        IDefinePontoEhEntradaOuSaidaService definePontoEhEntradaOuSaidaService
+    ) : IRequestHandler<CreatePontoCommand, ObjectResponse<bool>>
     {
         public async Task<ObjectResponse<bool>> Handle(CreatePontoCommand command, CancellationToken cancellationToken)
         {
@@ -28,7 +34,7 @@ namespace AtWork.Domain.Application.Ponto.Commands
                                                         where a.DT_Ponto >= dt_inicial && a.DT_Ponto <= dt_final && a.ID_Funcionario == userInfo.ID_Funcionario && a.ST_Ponto != StatusPonto.Cancelado
                                                         select a).ToListAsync(cancellationToken);
 
-            string tp_ponto = EntradaOuSaida(pontosJaCadastrados);
+            string tp_ponto = definePontoEhEntradaOuSaidaService.Handle(pontosJaCadastrados);
 
             TB_Ponto ponto = new()
             {
@@ -44,12 +50,6 @@ namespace AtWork.Domain.Application.Ponto.Commands
 
             result.Value = error.Ok();
             return result;
-        }
-
-        private static string EntradaOuSaida(List<TB_Ponto> pontosJaCadastrados)
-        {
-            int count = pontosJaCadastrados.Count;
-            return ((count + 1) % 2) == 0 ? TipoPonto.Saida : TipoPonto.Entrada;
         }
     }
 }
