@@ -98,7 +98,6 @@ namespace AtWork.Domain.Database
                 context.SaveChanges();
             }
 
-
             // Popule outras tabelas aqui...
         }
     }
